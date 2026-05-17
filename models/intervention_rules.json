@@ -1,0 +1,52 @@
+{
+  "absences": {
+    "threshold": 0.05,
+    "message": "High absences detected.",
+    "action": "Schedule attendance review. Contact parents. Check for underlying issues."
+  },
+  "failures": {
+    "threshold": 0.05,
+    "message": "History of past failures.",
+    "action": "Enrol in remedial classes. Assign academic mentor."
+  },
+  "studytime": {
+    "threshold": 0.03,
+    "message": "Low study time.",
+    "action": "Provide structured study plan. Recommend study groups."
+  },
+  "G1": {
+    "threshold": 0.05,
+    "message": "Poor Period 1 grade.",
+    "action": "Arrange extra tutoring. Weekly check-ins with subject teacher."
+  },
+  "G2": {
+    "threshold": 0.05,
+    "message": "Poor Period 2 grade.",
+    "action": "Urgent intervention. Refer to counsellor. Discuss with HOD."
+  },
+  "grade_trend": {
+    "threshold": 0.03,
+    "message": "Declining grade trend.",
+    "action": "Monitor weekly. Identify what changed between periods."
+  },
+  "avg_grade": {
+    "threshold": 0.05,
+    "message": "Low average grade.",
+    "action": "Full academic review with HOD. Personalised learning plan."
+  },
+  "social_risk": {
+    "threshold": 0.03,
+    "message": "High social risk score.",
+    "action": "Refer to counsellor. Engage parents."
+  },
+  "goout": {
+    "threshold": 0.03,
+    "message": "Frequently going out.",
+    "action": "Counselling session. Time management strategies."
+  },
+  "study_efficiency": {
+    "threshold": 0.03,
+    "message": "Low study efficiency.",
+    "action": "Check home study environment. Recommend library."
+  }
+}
