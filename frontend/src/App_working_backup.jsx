@@ -199,15 +199,18 @@ export default function Failsafe() {
         });
         if (!res.ok) { const e=await res.json(); throw new Error(e.detail || `Error ${res.status}`); }
         const data = await res.json();
-        // Normalise API response field names to what this frontend expects
-        const shap = data.shap_factors || [];
-        const top_risk_factors       = shap.filter(f => f.shap_value > 0).sort((a,b) => b.shap_value - a.shap_value).slice(0,8).map(f => ({ feature: f.feature, shap_impact: f.shap_value }));
-        const top_protective_factors = shap.filter(f => f.shap_value < 0).sort((a,b) => a.shap_value - b.shap_value).slice(0,5).map(f => ({ feature: f.feature, shap_impact: f.shap_value }));
-        const interventions = top_risk_factors.map(f => ({ issue: (FEATURE_LABELS[f.feature] || f.feature), shap_impact: f.shap_impact }));
-        const risk_score  = data.risk_score ?? 0;
-        const risk_level  = risk_score >= 0.65 ? "HIGH" : risk_score >= 0.38 ? "MODERATE" : "LOW";
-        const risk_percent = Math.round(risk_score * 100) + "%";
-        results.push({ name, roll, dept, risk_score, risk_level, risk_percent, top_risk_factors, top_protective_factors, interventions, id:i+1 });
+        // API already returns correct field names — just build interventions for plan generator
+        const top_risk_factors       = data.top_risk_factors || [];
+        const top_protective_factors = data.top_protective_factors || [];
+        const interventions = top_risk_factors.map(f => ({
+          issue: (FEATURE_LABELS[f.feature] || f.feature),
+          shap_impact: f.shap_impact
+        }));
+        results.push({ name, roll, dept,
+          risk_score:   data.risk_score,
+          risk_level:   data.risk_level,
+          risk_percent: data.risk_percent,
+          top_risk_factors, top_protective_factors, interventions, id:i+1 });
         setProgress(Math.round(((i+1)/DEMO_STUDENTS_RAW.length)*100));
       }
       results.sort((a,b) => b.risk_score - a.risk_score);
